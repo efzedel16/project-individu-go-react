@@ -7,21 +7,21 @@ Kita akan membuat tugas project pribadi dengan membuat back end menggunakan GO d
 - Silahkan tentukan mau membuat project seperti apa, untuk tema bebas. Tetapi khusus untuk back end harus memenuhi kriteria dibawah ini.
 
 # Project - Day 1
-## Release 1
+## Release 1 ✔️
 Buatlah sebuah tabel diagram sesuai keinginan kalian dengan catatan :
-1. terdapat minimal 3 tabel di dalam database.
-2. memiliki tabel user, dengan kolom sebagai berikut : 
-  * id / user_id : primarykey, not null, auto increment
-  * first_name  : varchar(255)
-  * last_name  : varchar(255)
-  * email  : varchar(255), unique
-  * password  : varchar(255)
-  * created_at : date(3) 
-  * updated_at : date(3)
+1. terdapat minimal 3 tabel di dalam database. ✔️
+2. memiliki tabel user, dengan kolom sebagai berikut : ✔️
+  * id / user_id : primarykey, not null, auto increment ✔️
+  * first_name  : varchar(255) ✔️
+  * last_name  : varchar(255) ✔️
+  * email  : varchar(255), unique ✔️
+  * password  : varchar(255) ✔️
+  * created_at : date(3) ✔️
+  * updated_at : date(3) ✔️
 
-3. table user memiliki relasi dengan tabel lain, setiap tabel selain tabel user juga memiliki relasi
+3. table user memiliki relasi dengan tabel lain, setiap tabel selain tabel user juga memiliki relasi. ✔️
 
-> NB : Silahkan laporkan ketika release 1 sudah selesai di github dalam bentuk foto atau pdf.
+> NB : Silahkan laporkan ketika release 1 sudah selesai di github dalam bentuk foto atau pdf. ✔️
 
 ## release 2
 Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
