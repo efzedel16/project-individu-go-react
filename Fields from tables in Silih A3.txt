@@ -1,5 +1,5 @@
 - user
- * id : int // AI
+ * id : int // AI, PK
  * first_name : varchar(255)
  * last_name : varchar(255)
  * email : varchar(255) // Unique
@@ -8,7 +8,7 @@
  * updated_at : datetime
 
 - donations
- * id : int
+ * id : int // AI, PK
  * user_id : int // FK
  * name : varchar(255)
  * short_description : varchar(255)
@@ -22,7 +22,7 @@
  * updated_at : datetime
 
 - donation images
- * id : int // AI
+ * id : int // AI, PK
  * campaign_id : int // FK
  * file_name : varchar(255)
  * is_primary : tinyint
@@ -30,7 +30,7 @@
  * updated_at : datetime
 
 - transactions
- * id : int // AI
+ * id : int // AI, PK
  * donation_id : int // FK
  * user_id : int // FK
  * amount : int
