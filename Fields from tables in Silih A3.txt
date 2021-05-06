@@ -31,8 +31,8 @@
 
 - transactions
  * id : int // AI, PK
- * donation_id : int // FK
  * user_id : int // FK
+ * donation_id : int // FK
  * amount : int
  * status : varchar(255)
  * code : varchar(255)
