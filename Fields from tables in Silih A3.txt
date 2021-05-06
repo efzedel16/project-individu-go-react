@@ -23,7 +23,7 @@
 
 - donation images
  * id : int // AI, PK
- * campaign_id : int // FK
+ * donation_id : int // FK
  * file_name : varchar(255)
  * is_primary : tinyint
  * created_at : datetime
