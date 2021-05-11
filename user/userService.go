@@ -1,5 +1,7 @@
 package user
 
+import "golang.org/x/crypto/bcrypt"
+
 type Service interface {
 	SignUpUser(input SignUpUserInput) (User, error)
 }
@@ -17,12 +19,17 @@ func (s *service) SignUpUser(input SignUpUserInput) (User, error) {
 	user.FirstName = input.FirstName
 	user.LastName = input.LastName
 	user.Email = input.Email
-	user.Password = input.Password
+	passwordHash, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.MinCost)
+	if err != nil {
+		return user, err
+	}
+	user.Password = string(passwordHash)
+	user.Role = "admin"
 
 	newUser, err := s.repository.InsertUser(user)
 	if err != nil {
 		return newUser, err
 	}
 
-	return user, nil
+	return newUser, nil
 }
