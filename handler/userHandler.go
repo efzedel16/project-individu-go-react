@@ -3,16 +3,18 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"silih_a3/auth"
 	"silih_a3/helper"
 	"silih_a3/user"
 )
 
 type userHandler struct {
 	userService user.Service
+	authService auth.Service
 }
 
-func NewUserHandler(userService user.Service) *userHandler {
-	return &userHandler{userService}
+func NewUserHandler(userService user.Service, authService auth.Service) *userHandler {
+	return &userHandler{userService, authService}
 }
 
 func (h *userHandler) SignUpUser(c *gin.Context) {
@@ -27,6 +29,13 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 	}
 
 	newUser, err := h.userService.SignUpUser(input)
+	if err != nil {
+		response := helper.APIResponse("Register account failed", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	token, err := h.authService.GenerateToken(newUser.Id)
 	if err != nil {
 		response := helper.APIResponse("Register account failed", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
