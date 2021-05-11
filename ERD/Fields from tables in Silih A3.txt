@@ -4,6 +4,8 @@
  * last_name : varchar(255)
  * email : varchar(255) // Unique
  * password : varchar(255)
+ * avatar_file_name : varchar(255)
+ * role : varchar(255)
  * created_at : datetime
  * updated_at : datetime
 
