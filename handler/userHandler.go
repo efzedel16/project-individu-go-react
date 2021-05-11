@@ -1,4 +1,4 @@
-package user
+package handler
 
 import (
 	"github.com/gin-gonic/gin"
@@ -10,7 +10,7 @@ type userHandler struct {
 	userService user.Service
 }
 
-func NewUserHandler(userService *service) *userHandler {
+func NewUserHandler(userService user.Service) *userHandler {
 	return &userHandler{userService}
 }
 
