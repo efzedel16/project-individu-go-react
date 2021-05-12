@@ -3,6 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"silih_a3/helper"
 	"silih_a3/user"
 )
 
@@ -21,10 +22,12 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 	}
 
-	user, err := h.userService.SignUpUser(input)
+	newUser, err := h.userService.SignUpUser(input)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 	}
 
-	c.JSON(http.StatusOK, user)
+	response := helper.APIResponse("Account has been registered", http.StatusOK, "success", newUser)
+
+	c.JSON(http.StatusOK, response)
 }
