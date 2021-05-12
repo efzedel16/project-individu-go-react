@@ -34,16 +34,16 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
    * DELETE "/users/:user_id" ket : routingan untuk melakukan delete user sesuai parameter yang diberikan"
 
 # Project - Day 2
-## Release 3
+## Release 3 ✔️
 
-- Silahkan perbaiki code REST API yang sudah di buat dengan menerapkan arsitektur yang sudah dijelaskan dengan menerapkan layer - layer :
-1. repository , ket : package ini adalah package yang digunakan untuk berkomunikasi dengan database
-2. service , ket : package ini adalah package yang digunakan untuk melakukan bussiness logic di back end
-3. handler / controller : package ini digunakan untuk berkomunikasi dengan user / pengguna eksternal baik itu menerima data atau menampilkan data
+- Silahkan perbaiki code REST API yang sudah di buat dengan menerapkan arsitektur yang sudah dijelaskan dengan menerapkan layer - layer : ✔️
+1. repository , ket : package ini adalah package yang digunakan untuk berkomunikasi dengan database ✔️
+2. service , ket : package ini adalah package yang digunakan untuk melakukan bussiness logic di back end ✔️
+3. handler / controller : package ini digunakan untuk berkomunikasi dengan user / pengguna eksternal baik itu menerima data atau menampilkan data ✔️
 
 
 ## release 4
-- Gunakan hashing untuk data yang bersifat pribadi dengan membuat package helper. Seperti password user atau data lain di tabel yang datanya perlu di enksipsi.
+- Gunakan hashing untuk data yang bersifat pribadi dengan membuat package helper. Seperti password user atau data lain di tabel yang datanya perlu di enksipsi. ✔️
 - Aplikasikan "env" atau environment variabel pada project ini.
 
 

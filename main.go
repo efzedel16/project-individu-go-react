@@ -26,16 +26,6 @@ func main() {
 	authService := auth.NewService()
 	userHandler := handler.NewUserHandler(userService, authService)
 
-	router := gin.Default()
-	api := router.Group("/api/v1")
-	api.POST("/users", userHandler.SignUpUser)
-	api.POST("/sessions", userHandler.SignInUser)
-	api.POST("/email_checkers", userHandler.CheckEmailAvailability)
-	api.POST("/avatars", authMiddleware(authService, userService), userHandler.UploadAvatar)
-	err = router.Run()
-	if err != nil {
-		return
-	}
 }
 
 func authMiddleware(authService auth.Service, userService user.Service) gin.HandlerFunc {
