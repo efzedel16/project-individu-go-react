@@ -3,13 +3,13 @@ package user
 import "time"
 
 type User struct {
-	Id int
+	Id        int
 	FirstName string
-	LastName string
-	Email string
-	Password string
-	Avatar string
-	Role string
+	LastName  string
+	Email     string
+	Password  string
+	Avatar    string
+	Role      string
 	CreatedAt time.Time
-	UpdateAt time.Time
+	UpdatedAt time.Time
 }
