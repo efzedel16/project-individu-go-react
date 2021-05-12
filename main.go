@@ -35,5 +35,8 @@ func main() {
 	router := gin.Default()
 	api := router.Group("/users")
 	api.POST("/signup", userHandler.SignUpUser)
-	router.Run()
+	err = router.Run()
+	if err != nil {
+		return 
+	}
 }
