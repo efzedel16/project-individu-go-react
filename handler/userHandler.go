@@ -27,7 +27,9 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, nil)
 	}
 
-	response := helper.APIResponse("Account has been registered", http.StatusOK, "success", newUser)
+	formatter := user.FormatUser(newUser, "token")
+
+	response := helper.APIResponse("Account has been registered", http.StatusOK, "success", formatter)
 
 	c.JSON(http.StatusOK, response)
 }
