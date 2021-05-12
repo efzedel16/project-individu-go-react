@@ -2,7 +2,6 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	"net/http"
 	"silih_a3/helper"
 	"silih_a3/user"
@@ -20,11 +19,7 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 	var input user.SignUpUserInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
-		var errors []string
-		for _, err := range err.(validator.ValidationErrors) {
-			errors = append(errors, err.Error())
-		}
-
+		errors := helper.SignUpValidationErrorFormat(err)
 		errorMessage := gin.H{"errors": errors}
 		response := helper.APIResponse("Account failed registered", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
@@ -39,8 +34,6 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 	}
 
 	formatter := user.FormatUser(newUser, "token")
-
 	response := helper.APIResponse("Account successfully registered", http.StatusOK, "success", formatter)
-
 	c.JSON(http.StatusOK, response)
 }
