@@ -27,7 +27,7 @@ Buatlah sebuah tabel diagram sesuai keinginan kalian dengan catatan :
 Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
 - REST API yang dibuat harus memenuhi basic CRUD ( create, read, update, delete)
 - Didalam rest API tersebut harus memiliki :
-   * POST "/users" ket : routingan untuk membuat user baru
+   * POST "/users" ket : routingan untuk membuat user baru ✔️
    * GET "/users" , ket : menampilkan seluruh user yang ada di database
    * GET "/users/:user_id" , ket : menampilkan 1 user sesuai dengan parameter yang diberikan
    * PUT "/users/:user_id", ket : melakukan update user sesuai dengan parameter yang diberikan
@@ -53,8 +53,8 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
 
 - Terdapat beberapa code yang wajib dibuat di project ini sebagai berikut: 
 1. buatlah routing untuk register user dan juga login user
-  * POST "/users/register" , ket : routingan register digunakan untuk melakukan register user
-  * POST "/users/login" , ket : routingan login digunakan untuk mendapatkan akses authorization dan juga mendapatkan data user yang sedang melakukan login 
+  * POST "/users/register" , ket : routingan register digunakan untuk melakukan register user ✔️
+  * POST "/users/login" , ket : routingan login digunakan untuk mendapatkan akses authorization dan juga mendapatkan data user yang sedang melakukan login ✔️
 
 2. Silahkan menerapkan middleware untuk routingan :
   * GET "users/:user_id"
