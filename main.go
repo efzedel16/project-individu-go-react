@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -19,18 +18,29 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
-
-	userByEmail, err := userRepository.FindByEmail("efzedel16@outlook.com")
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	if userByEmail.Id == 0 {
-		fmt.Println("User tidak ada")
-	} else {
-		fmt.Println(userByEmail.FirstName)
-	}
-
 	userHandler := handler.NewUserHandler(userService)
+
+	//input := user.SignInUserInput{
+	//	Email: "efzedel16@otlook.com",
+	//	Password: "password",
+	//}
+	//user, err := userService.SignInUser(input)
+	//if err != nil {
+	//	fmt.Println("Terjadi kesalahan")
+	//	fmt.Println(err.Error())
+	//}
+	//fmt.Println(user.Email)
+	//fmt.Println(user.FirstName)
+
+	//userByEmail, err := userRepository.FindByEmail("efzedel16@outlook.com")
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+	//if userByEmail.Id == 0 {
+	//	fmt.Println("User tidak ada")
+	//} else {
+	//	fmt.Println(userByEmail.FirstName)
+	//}
 
 	//userInput := user.SignUpUserInput{}
 	//userInput.FirstName = "Tes dari service"
@@ -49,6 +59,6 @@ func main() {
 	api.POST("/signup", userHandler.SignUpUser)
 	err = router.Run()
 	if err != nil {
-		return 
+		return
 	}
 }
