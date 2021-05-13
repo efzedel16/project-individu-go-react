@@ -33,11 +33,11 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 		return
 	}
 
-	formatter := user.FormatUser(newUser, "token")
+	formatter := user.Format(newUser, "token")
 	response := helper.APIResponse("Account successfully registered", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *userHandler) SignIn(c *gin.Context) {
-
-}
+//func (h *userHandler) SignIn(c *gin.Context) {
+//
+//}

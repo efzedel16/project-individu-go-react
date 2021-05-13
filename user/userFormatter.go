@@ -1,6 +1,6 @@
 package user
 
-type UserFormatter struct {
+type FormatterResponse struct {
 	Id        int    `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
@@ -8,8 +8,8 @@ type UserFormatter struct {
 	Token     string `json:"token"`
 }
 
-func FormatUser(user User, token string) UserFormatter {
-	formatter := UserFormatter{
+func Format(user User, token string) FormatterResponse {
+	formatter := FormatterResponse{
 		Id:        user.Id,
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
