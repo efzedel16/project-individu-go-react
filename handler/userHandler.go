@@ -37,3 +37,7 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 	response := helper.APIResponse("Account successfully registered", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
+
+func (h *userHandler) SignIn(c *gin.Context) {
+
+}
