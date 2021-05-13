@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -18,6 +19,17 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+
+	userByEmail, err := userRepository.FindByEmail("efzedel16@outlook.com")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	if userByEmail.Id == 0 {
+		fmt.Println("User tidak ada")
+	} else {
+		fmt.Println(userByEmail.FirstName)
+	}
+
 	userHandler := handler.NewUserHandler(userService)
 
 	//userInput := user.SignUpUserInput{}
