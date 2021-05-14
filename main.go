@@ -18,10 +18,9 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
-
-	userService.InsertAvatar(13, "images/mfh.png")
-
 	userHandler := handler.NewUserHandler(userService)
+
+	//userService.InsertAvatar(13, "images/mfh.png")
 
 	//input := user.SignInUserInput{
 	//	Email: "efzedel16@otlook.com",
@@ -62,6 +61,7 @@ func main() {
 	api.POST("/signup", userHandler.SignUpUser)
 	api.POST("/signin", userHandler.SignInUser)
 	api.POST("/email_checker", userHandler.CheckEmailAvailability)
+	api.POST("/avatar", userHandler.UploadAvatar)
 	err = router.Run()
 	if err != nil {
 		return
