@@ -28,14 +28,14 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 		return
 	}
 
-	SignUpUser, err := h.userService.SignUpUser(input)
+	signUpUser, err := h.userService.SignUpUser(input)
 	if err != nil {
 		response := helper.APIResponse("Account failed registered", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	formatter := user.Format(SignUpUser, "token")
+	formatter := user.Format(signUpUser, "token")
 	response := helper.APIResponse("Account successfully registered", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
@@ -52,7 +52,7 @@ func (h *userHandler) SignInUser(c *gin.Context) {
 		return
 	}
 
-	SignInUser, err := h.userService.SignInUser(input)
+	signInUser, err := h.userService.SignInUser(input)
 	if err != nil {
 		errorMessage := gin.H{"errors": err.Error()}
 		response := helper.APIResponse("account login failed", http.StatusUnprocessableEntity, "error", errorMessage)
@@ -60,7 +60,7 @@ func (h *userHandler) SignInUser(c *gin.Context) {
 		return
 	}
 
-	formatter := user.Format(SignInUser, "token")
+	formatter := user.Format(signInUser, "token")
 	response := helper.APIResponse("Account login successfully ", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
@@ -77,7 +77,7 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 		return
 	}
 
-	IsEmailAvailable, err := h.userService.IsEmailAvailable(input)
+	isEmailAvailable, err := h.userService.IsEmailAvailable(input)
 	if err != nil {
 		errorMessage := gin.H{"errors": "Server is error"}
 		response := helper.APIResponse("Check email failed", http.StatusUnprocessableEntity, "error", errorMessage)
@@ -85,9 +85,9 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 		return
 	}
 
-	data := gin.H{"is_available": IsEmailAvailable}
+	data := gin.H{"is_available": isEmailAvailable}
 	metaMessage := "Email has been registered"
-	if IsEmailAvailable {
+	if isEmailAvailable {
 		metaMessage = "Email is available"
 	}
 
@@ -105,7 +105,7 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 	}
 
 	userId := 13
-	path := fmt.Sprintf("images/%d-%s", userId, avatarFile.Filename)
+	path := fmt.Sprintf("images/#{userdId}-#{avatarFile.Filename}")
 	err = c.SaveUploadedFile(avatarFile, path)
 	if err != nil {
 		data := gin.H{"is_uploaded": false}
