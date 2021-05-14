@@ -61,7 +61,7 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
   * PUT "users/:user_id"
   * DELETE "/users/:user_id"
 
-3. Gunakan middleware untuk akses routing yang bersifat privat atau memerlukan akses user login melalui routingan POST "/users/login"
+3. Gunakan middleware untuk akses routing yang bersifat privat atau memerlukan akses user login melalui routingan POST "/users/login" ✔️
 
 # Project Day 4
 ## release 6
