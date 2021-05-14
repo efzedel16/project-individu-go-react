@@ -29,7 +29,7 @@ func (s *service) SignUpUser(input SignUpUserInput) (User, error) {
 		return user, err
 	}
 	user.Password = string(passwordHash)
-	user.Role = "admin"
+	user.Role = "user"
 
 	newUser, err := s.repository.InsertUser(user)
 	if err != nil {
