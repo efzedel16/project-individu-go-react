@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
+	"silih_a3/auth"
 	"silih_a3/handler"
 	"silih_a3/user"
 )
@@ -18,6 +20,10 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+
+	authService := auth.NewService()
+	fmt.Println(authService.GenerateToken(13))
+
 	userHandler := handler.NewUserHandler(userService)
 
 	//userService.InsertAvatar(13, "images/mfh.png")
