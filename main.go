@@ -58,6 +58,7 @@ func main() {
 	api := router.Group("/users")
 	api.POST("/signup", userHandler.SignUpUser)
 	api.POST("/signin", userHandler.SignInUser)
+	api.POST("/email_checker", userHandler.CheckEmailAvailability)
 	err = router.Run()
 	if err != nil {
 		return
