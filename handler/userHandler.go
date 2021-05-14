@@ -71,21 +71,21 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 	if err != nil {
 		errors := helper.SignUpValidationErrorFormat(err)
 		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Email checking failed", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Check email failed", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
 	IsEmailAvailable, err := h.userService.IsEmailAvailable(input)
 	if err != nil {
-		errorMessage := gin.H{"errors": "Server error"}
-		response := helper.APIResponse("Email checking failed", http.StatusUnprocessableEntity, "error", errorMessage)
+		errorMessage := gin.H{"errors": "Server is error"}
+		response := helper.APIResponse("Check email failed", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
 	data := gin.H{
-		"is_available" : IsEmailAvailable,
+		"is_available": IsEmailAvailable,
 	}
 
 	metaMessage := "Email has been registered"
@@ -93,6 +93,6 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 		metaMessage = "Email is available"
 	}
 
-	response := helper.APIResponse(metaMessage, http.StatusOK, "error", data)
-	c.JSON(http.StatusUnprocessableEntity, response)
+	response := helper.APIResponse(metaMessage, http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
 }
