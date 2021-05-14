@@ -22,12 +22,28 @@ func main() {
 	authService := auth.NewService()
 	userHandler := handler.NewUserHandler(userService, authService)
 
+	//token, err := authService.TokenValidation("eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxN30.CTDbIYW42bJ98bHyTA4aiw1OSp8kly88yuugbvV1r-QidwfotsH-8GUtQ9b8rRbmXpsJuQ27PF5RLNuMDbHB5Q")
+	//if err != nil {
+	//	fmt.Println("ERROR")
+	//	fmt.Println("ERROR")
+	//	fmt.Println("ERROR")
+	//}
+	//if token.Valid {
+	//	fmt.Println("VALID")
+	//	fmt.Println("VALID")
+	//	fmt.Println("VALID")
+	//} else {
+	//	fmt.Println("INVALID")
+	//	fmt.Println("INVALID")
+	//	fmt.Println("INVALID")
+	//}
+
 	//fmt.Println(authService.GenerateToken(13))
 
 	//userService.InsertAvatar(13, "images/mfh.png")
 
 	//input := user.SignInUserInput{
-	//	Email: "efzedel16@otlook.com",
+	//	Email: "email@mail.com",
 	//	Password: "password",
 	//}
 	//user, err := userService.SignInUser(input)
@@ -38,7 +54,7 @@ func main() {
 	//fmt.Println(user.Email)
 	//fmt.Println(user.FirstName)
 
-	//userByEmail, err := userRepository.FindByEmail("efzedel16@outlook.com")
+	//userByEmail, err := userRepository.FindByEmail("email@mail.com")
 	//if err != nil {
 	//	fmt.Println(err.Error())
 	//}
