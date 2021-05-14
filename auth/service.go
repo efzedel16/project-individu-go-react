@@ -3,7 +3,7 @@ package auth
 import "github.com/dgrijalva/jwt-go"
 
 type Service interface {
-	GenerateToken(userId int, fullName string) (string, error)
+	GenerateToken(userId int) (string, error)
 }
 
 type jwtService struct {

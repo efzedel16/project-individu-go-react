@@ -4,16 +4,18 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"silih_a3/auth"
 	"silih_a3/helper"
 	"silih_a3/user"
 )
 
 type userHandler struct {
 	userService user.Service
+	authService auth.Service
 }
 
-func NewUserHandler(userService user.Service) *userHandler {
-	return &userHandler{userService}
+func NewUserHandler(userService user.Service, authService auth.Service) *userHandler {
+	return &userHandler{userService, authService}
 }
 
 func (h *userHandler) SignUpUser(c *gin.Context) {
@@ -35,7 +37,14 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 		return
 	}
 
-	formatter := user.Format(signUpUser, "token")
+	token, err := h.authService.GenerateToken(signUpUser.Id)
+	if err != nil {
+		response := helper.APIResponse("Account failed registered", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	formatter := user.Format(signUpUser, token)
 	response := helper.APIResponse("Account successfully registered", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
@@ -60,7 +69,14 @@ func (h *userHandler) SignInUser(c *gin.Context) {
 		return
 	}
 
-	formatter := user.Format(signInUser, "token")
+	token, err := h.authService.GenerateToken(signInUser.Id)
+	if err != nil {
+		response := helper.APIResponse("Account login failed", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	formatter := user.Format(signInUser, token)
 	response := helper.APIResponse("Account login successfully ", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
