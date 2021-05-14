@@ -18,6 +18,9 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+
+	userService.InsertAvatar(13, "images/mfh.png")
+
 	userHandler := handler.NewUserHandler(userService)
 
 	//input := user.SignInUserInput{

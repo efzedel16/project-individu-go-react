@@ -96,3 +96,7 @@ func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 	response := helper.APIResponse(metaMessage, http.StatusOK, "success", data)
 	c.JSON(http.StatusOK, response)
 }
+
+//func (h *userHandler) UploadAvatar(c *gin.Context) {
+//	c.SaveUploadedFile(file, )
+//}
