@@ -1,13 +1,17 @@
 package main
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
+	"net/http"
 	"silih_a3/auth"
 	"silih_a3/handler"
+	"silih_a3/helper"
 	"silih_a3/user"
+	"strings"
 )
 
 func main() {
@@ -81,9 +85,50 @@ func main() {
 	api.POST("/signup", userHandler.SignUpUser)
 	api.POST("/signin", userHandler.SignInUser)
 	api.POST("/email_checker", userHandler.CheckEmailAvailability)
-	api.POST("/avatar", userHandler.UploadAvatar)
+	api.POST("/avatar", authMiddleware(authService, userService), userHandler.UploadAvatar)
 	err = router.Run()
 	if err != nil {
 		return
+	}
+}
+
+func authMiddleware(authService auth.Service, userService user.Service) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		authHeader := c.GetHeader("Authorization")
+		if !strings.Contains(authHeader, "Bearer") {
+			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+			return
+		}
+
+		tokenString := ""
+		tokenArr := strings.Split(authHeader, " ")
+		if len(tokenArr) == 2 {
+			tokenString = tokenArr[1]
+		}
+
+		token, err := authService.TokenValidation(tokenString)
+		if err != nil {
+			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+			return
+		}
+
+		claim, ok := token.Claims.(jwt.MapClaims)
+		if !ok || !token.Valid {
+			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+			return
+		}
+
+		userId := int(claim["user_id"].(float64))
+		currentUser, err := userService.GetUserById(userId)
+		if err != nil {
+			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+			return
+		}
+
+		c.Set("currentUser", currentUser)
 	}
 }

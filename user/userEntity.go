@@ -9,7 +9,6 @@ type User struct {
 	Email     string
 	Password  string
 	Avatar    string
-	Token     string
 	Role      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
