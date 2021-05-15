@@ -20,7 +20,6 @@ func NewUserHandler(userService user.Service, authService auth.Service) *userHan
 
 func (h *userHandler) SignUpUser(c *gin.Context) {
 	var input user.SignUpUserInput
-
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.SignUpValidationErrorFormat(err)
@@ -51,7 +50,6 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 
 func (h *userHandler) SignInUser(c *gin.Context) {
 	var input user.SignInUserInput
-
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.SignUpValidationErrorFormat(err)
@@ -83,7 +81,6 @@ func (h *userHandler) SignInUser(c *gin.Context) {
 
 func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
 	var input user.CheckEmailInput
-
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.SignUpValidationErrorFormat(err)
