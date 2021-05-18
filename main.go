@@ -26,22 +26,27 @@ func main() {
 	userRepository := user.NewRepository(db)
 	donationRepository := donation.NewRepository(db)
 
-	//donations := donationRepository.FindAllDonations()
-	donations := donationRepository.FindDonationsByUserId(17)
-	fmt.Println("debug")
-	fmt.Println("debug")
-	fmt.Println("debug")
-	fmt.Println(len(donations))
-	for _, donation := range donations {
-		fmt.Println(donation.Name)
-		if len(donation.DonationImages) > 0 {
-			fmt.Println(donation.DonationImages[0].FileName)
-		}
-	}
-
 	userService := user.NewService(userRepository)
+	donationService := donation.NewService(donationRepository)
 	authService := auth.NewService()
+
+	donations, _ := donationService.GetDonations(16)
+	fmt.Println(len(donations))
+
 	userHandler := handler.NewUserHandler(userService, authService)
+
+	//donations := donationRepository.FindAllDonations()
+	//donations := donationRepository.FindDonationsByUserId(17)
+	//fmt.Println("debug")
+	//fmt.Println("debug")
+	//fmt.Println("debug")
+	//fmt.Println(len(donations))
+	//for _, donation := range donations {
+	//	fmt.Println(donation.Name)
+	//	if len(donation.DonationImages) > 0 {
+	//		fmt.Println(donation.DonationImages[0].FileName)
+	//	}
+	//}
 
 	//token, err := authService.TokenValidation("eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxN30.CTDbIYW42bJ98bHyTA4aiw1OSp8kly88yuugbvV1r-QidwfotsH-8GUtQ9b8rRbmXpsJuQ27PF5RLNuMDbHB5Q")
 	//if err != nil {
