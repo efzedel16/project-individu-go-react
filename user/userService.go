@@ -45,7 +45,7 @@ func (s *service) SignInUser(input SignInUserInput) (User, error) {
 	email := input.Email
 	password := input.Password
 
-	user, err := s.repository.FindByEmail(email)
+	user, err := s.repository.FindUserByEmail(email)
 	if err != nil {
 		return user, err
 	}
@@ -65,7 +65,7 @@ func (s *service) SignInUser(input SignInUserInput) (User, error) {
 func (s *service) IsEmailAvailable(input CheckEmailInput) (bool, error) {
 	email := input.Email
 
-	user, err := s.repository.FindByEmail(email)
+	user, err := s.repository.FindUserByEmail(email)
 	if err != nil {
 		return false, err
 	}
@@ -78,7 +78,7 @@ func (s *service) IsEmailAvailable(input CheckEmailInput) (bool, error) {
 }
 
 func (s *service) InsertAvatar(id int, fileLocation string) (User, error) {
-	user, err := s.repository.FindById(id)
+	user, err := s.repository.FindUserById(id)
 	if err != nil {
 		return user, err
 	}
@@ -93,7 +93,7 @@ func (s *service) InsertAvatar(id int, fileLocation string) (User, error) {
 }
 
 func (s *service) GetUserById(id int) (User, error) {
-	user, err := s.repository.FindById(id)
+	user, err := s.repository.FindUserById(id)
 	if err != nil {
 		return user, err
 	}
