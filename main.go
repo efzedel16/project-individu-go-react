@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -8,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"silih_a3/auth"
+	"silih_a3/donation"
 	"silih_a3/handler"
 	"silih_a3/helper"
 	"silih_a3/user"
@@ -22,6 +24,21 @@ func main() {
 	}
 
 	userRepository := user.NewRepository(db)
+	donationRepository := donation.NewRepository(db)
+
+	//donations := donationRepository.FindAllDonations()
+	donations := donationRepository.FindDonationsByUserId(17)
+	fmt.Println("debug")
+	fmt.Println("debug")
+	fmt.Println("debug")
+	fmt.Println(len(donations))
+	for _, donation := range donations {
+		fmt.Println(donation.Name)
+		if len(donation.DonationImages) > 0 {
+			fmt.Println(donation.DonationImages[0].FileName)
+		}
+	}
+
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 	userHandler := handler.NewUserHandler(userService, authService)
