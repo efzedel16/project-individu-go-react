@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type Repository interface {
 	InsertUser(user User) (User, error)
-	FindByEmail(email string) (User, error)
-	FindById(id int) (User, error)
+	FindUserByEmail(email string) (User, error)
+	FindUserById(id int) (User, error)
 	UpdateUser(user User) (User, error)
 }
 
@@ -26,7 +26,7 @@ func (r *repository) InsertUser(user User) (User, error) {
 	return user, nil
 }
 
-func (r *repository) FindByEmail(email string) (User, error) {
+func (r *repository) FindUserByEmail(email string) (User, error) {
 	var user User
 	err := r.db.Where("email = ?", email).Find(&user).Error
 	if err != nil {
@@ -36,7 +36,7 @@ func (r *repository) FindByEmail(email string) (User, error) {
 	return user, nil
 }
 
-func (r *repository) FindById(id int) (User, error) {
+func (r *repository) FindUserById(id int) (User, error) {
 	var user User
 	err := r.db.Where("id = ?", id).Find(&user).Error
 	if err != nil {
