@@ -1,7 +1,7 @@
 package donation
 
 type Service interface {
-	GetAllDonations(userId int) ([]Donation, error)
+	GetDonations(userId int) ([]Donation, error)
 }
 
 type service struct {
@@ -12,7 +12,7 @@ func NewService(repository Repository) *service {
 	return &service{repository}
 }
 
-func (s *service) GetAllDonations(userId int) ([]Donation, error) {
+func (s *service) GetDonations(userId int) ([]Donation, error) {
 	if userId != 0 {
 		donations, err := s.repository.FindDonationsByUserId(userId)
 		if err != nil {
@@ -22,7 +22,7 @@ func (s *service) GetAllDonations(userId int) ([]Donation, error) {
 		return donations, nil
 	}
 
-	donations, err := s.repository.FindDonations()
+	donations, err := s.repository.FindAllDonations()
 	if err != nil {
 		return donations, err
 	}
