@@ -7,6 +7,7 @@ import (
 	"silih_a3/auth"
 	"silih_a3/helper"
 	"silih_a3/user"
+	"strconv"
 )
 
 type userHandler struct {
@@ -139,4 +140,17 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 	data := gin.H{"is_uploaded": true}
 	response := helper.APIResponse("Successfully uploaded avatar image", http.StatusOK, "success", data)
 	c.JSON(http.StatusBadRequest, response)
+}
+
+func (h *userHandler) GetAllUsers(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Query("id"))
+	users, err := h.userService.GetAllUsers(id)
+	if err != nil {
+		response := helper.APIResponse("Failed to get users", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Successfully to get users", http.StatusOK, "success", users)
+	c.JSON(http.StatusOK, response)
 }
