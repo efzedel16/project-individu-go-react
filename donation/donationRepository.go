@@ -3,7 +3,7 @@ package donation
 import "gorm.io/gorm"
 
 type Repository interface {
-	FindAllDonations() ([]Donation, error)
+	FindDonations() ([]Donation, error)
 	FindDonationsByUserId(userId int) ([]Donation, error)
 }
 
@@ -15,7 +15,7 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAllDonations() ([]Donation, error) {
+func (r *repository) FindDonations() ([]Donation, error) {
 	var donations []Donation
 	err := r.db.Preload("DonationImages", "donation_images.is_primary = 1").Find(&donations).Error
 	if err != nil {
