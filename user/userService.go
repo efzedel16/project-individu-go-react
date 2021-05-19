@@ -10,8 +10,8 @@ type Service interface {
 	SignInUser(input SignInUserInput) (User, error)
 	IsEmailAvailable(input CheckEmailInput) (bool, error)
 	InsertAvatar(id int, fileLocation string) (User, error)
+	GetUsers(id int) (User, error)
 	GetUserById(id int) (User, error)
-	GetAllUsers(id int) (User, error)
 }
 
 type service struct {
@@ -93,6 +93,24 @@ func (s *service) InsertAvatar(id int, fileLocation string) (User, error) {
 	return updateUser, nil
 }
 
+func (s *service) GetUsers(id int) (User, error) {
+	if id != 0 {
+		users, err := s.repository.FindUserById(id)
+		if err != nil {
+			return users, err
+		}
+
+		return users, nil
+	}
+
+	users, err := s.repository.FindAllUsers()
+	if err != nil {
+		return users, err
+	}
+
+	return users, nil
+}
+
 func (s *service) GetUserById(id int) (User, error) {
 	user, err := s.repository.FindUserById(id)
 	if err != nil {
@@ -104,22 +122,4 @@ func (s *service) GetUserById(id int) (User, error) {
 	}
 
 	return user, nil
-}
-
-func (s *service) GetAllUsers(id int) (User, error) {
-	if id != 0 {
-		users, err := s.repository.FindUserById(id)
-		if err != nil {
-			return users, err
-		}
-
-		return users, nil
-	}
-
-	users, err := s.repository.FindUsers()
-	if err != nil {
-		return users, err
-	}
-
-	return users, nil
 }

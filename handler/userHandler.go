@@ -142,9 +142,9 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 	c.JSON(http.StatusBadRequest, response)
 }
 
-func (h *userHandler) GetAllUsers(c *gin.Context) {
+func (h *userHandler) GetUsers(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Query("id"))
-	users, err := h.userService.GetAllUsers(id)
+	users, err := h.userService.GetUsers(id)
 	if err != nil {
 		response := helper.APIResponse("Failed to get users", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
