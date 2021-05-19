@@ -9,22 +9,22 @@ import (
 )
 
 type donationHandler struct {
-	service donation.Service
+	donationService donation.Service
 }
 
 func NewDonationHandler(service donation.Service) *donationHandler {
 	return &donationHandler{service}
 }
 
-func (h *donationHandler) GetAllDonations(c *gin.Context) {
+func (h *donationHandler) GetDonations(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Query("user_id"))
-	donations, err := h.service.GetAllDonations(userId)
+	donations, err := h.donationService.GetDonations(userId)
 	if err != nil {
 		response := helper.APIResponse("Failed to get donations", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Successfully to get donations", http.StatusOK, "success", donations)
+	response := helper.APIResponse("Successfully to get donations", http.StatusOK, "success", donation.DonationsFormat(donations))
 	c.JSON(http.StatusOK, response)
 }
