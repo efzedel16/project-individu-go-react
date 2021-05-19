@@ -10,7 +10,6 @@ import (
 	"silih_a3/auth"
 	"silih_a3/donation"
 	"silih_a3/handler"
-
 	"silih_a3/helper"
 	"silih_a3/user"
 	"strings"
@@ -113,8 +112,9 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/users", userHandler.GetAllUsers)
-	router.GET("/donations", donationsHandler.GetAllDonations)
+	router.GET("/users", userHandler.GetUsers)
+	router.GET("/donations", donationsHandler.GetDonations)
+	router.Static("/images", "./images")
 
 	users := router.Group("/users")
 	users.POST("/signup", userHandler.SignUpUser)
