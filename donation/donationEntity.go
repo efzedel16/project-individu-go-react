@@ -15,10 +15,10 @@ type Donation struct {
 	Slug             string
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
-	DonationImages   []DonationImage
+	DonationImages   []Image
 }
 
-type DonationImage struct {
+type Image struct {
 	Id         int
 	DonationId int
 	FileName   string

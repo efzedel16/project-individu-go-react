@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -11,6 +10,7 @@ import (
 	"silih_a3/auth"
 	"silih_a3/donation"
 	"silih_a3/handler"
+
 	"silih_a3/helper"
 	"silih_a3/user"
 	"strings"
@@ -30,10 +30,11 @@ func main() {
 	donationService := donation.NewService(donationRepository)
 	authService := auth.NewService()
 
-	donations, _ := donationService.GetDonations(16)
-	fmt.Println(len(donations))
-
 	userHandler := handler.NewUserHandler(userService, authService)
+	donationsHandler := handler.NewDonationHandler(donationService)
+
+	//donations, _ := donationService.GetDonations(16)
+	//fmt.Println(len(donations))
 
 	//donations := donationRepository.FindAllDonations()
 	//donations := donationRepository.FindDonationsByUserId(17)
@@ -65,6 +66,14 @@ func main() {
 	//}
 
 	//fmt.Println(authService.GenerateToken(13))
+
+	//users := userRepository.FindAllUser()
+	//fmt.Println("debug")
+	//fmt.Println("debug")
+	//fmt.Println("debug")
+	//for _, u := range users {
+	//	fmt.Println(u)
+	//}
 
 	//userService.InsertAvatar(13, "images/mfh.png")
 
@@ -103,11 +112,16 @@ func main() {
 	//userRepository.InsertUser(user)
 
 	router := gin.Default()
-	api := router.Group("/users")
-	api.POST("/signup", userHandler.SignUpUser)
-	api.POST("/signin", userHandler.SignInUser)
-	api.POST("/email_checker", userHandler.CheckEmailAvailability)
-	api.POST("/avatar", authMiddleware(authService, userService), userHandler.UploadAvatar)
+
+	router.GET("/users", userHandler.GetAllUsers)
+	router.GET("/donations", donationsHandler.GetAllDonations)
+
+	users := router.Group("/users")
+	users.POST("/signup", userHandler.SignUpUser)
+	users.POST("/signin", userHandler.SignInUser)
+	users.POST("/email_checker", userHandler.CheckEmailAvailability)
+	users.POST("/avatar", authMiddleware(authService, userService), userHandler.UploadAvatar)
+
 	err = router.Run()
 	if err != nil {
 		return
