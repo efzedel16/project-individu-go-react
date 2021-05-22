@@ -15,3 +15,7 @@ type SignInUserInput struct {
 type CheckEmailInput struct {
 	Email string `json:"email" binding:"required,email"`
 }
+
+type UserIdInput struct {
+	Id int `uri:"id" binding:"required"`
+}
