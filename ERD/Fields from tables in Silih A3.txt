@@ -5,7 +5,6 @@
  * email : varchar(255) // Unique
  * password : varchar(255)
  * avatar : varchar(255)
- * token : varchar(255)
  * role : varchar(255)
  * created_at : datetime
  * updated_at : datetime
@@ -27,7 +26,7 @@
 - donation images
  * id : int // AI, PK
  * donation_id : int // FK
- * file_name : varchar(255)
+ * image : varchar(255)
  * is_primary : tinyint
  * created_at : datetime
  * updated_at : datetime
