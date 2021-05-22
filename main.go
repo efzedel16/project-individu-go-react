@@ -22,15 +22,15 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	userRepository := user.NewRepository(db)
-	donationRepository := donation.NewRepository(db)
+	userRepository := user.NewUserRepository(db)
+	donationRepository := donation.NewDonationRepository(db)
 
-	userService := user.NewService(userRepository)
-	donationService := donation.NewService(donationRepository)
+	userService := user.NewUserService(userRepository)
+	donationService := donation.NewDonationService(donationRepository)
 	authService := auth.NewService()
 
 	userHandler := handler.NewUserHandler(userService, authService)
-	donationsHandler := handler.NewDonationHandler(donationService)
+	donationHandler := handler.NewDonationHandler(donationService)
 
 	//donations, _ := donationService.GetDonations(16)
 	//fmt.Println(len(donations))
@@ -111,16 +111,19 @@ func main() {
 	//userRepository.InsertUser(user)
 
 	router := gin.Default()
-
-	router.GET("/users", userHandler.GetUsers)
-	router.GET("/donations", donationsHandler.GetDonations)
+	router.GET("/users", userHandler.GetAllUsers)
+	router.GET("/donations", donationHandler.GetAllDonations)
 	router.Static("/images", "./images")
 
-	users := router.Group("/users")
-	users.POST("/signup", userHandler.SignUpUser)
-	users.POST("/signin", userHandler.SignInUser)
-	users.POST("/email_checker", userHandler.CheckEmailAvailability)
-	users.POST("/avatar", authMiddleware(authService, userService), userHandler.UploadAvatar)
+	user := router.Group("/users")
+	user.GET("/:id", userHandler.GetUser)
+	user.POST("/signup", userHandler.SignUpUser)
+	user.POST("/signin", userHandler.SignInUser)
+	user.POST("/email_checker", userHandler.CheckEmailAvailability)
+	user.POST("/avatar", authMiddleware(authService, userService), userHandler.UploadAvatar)
+
+	donation := router.Group("/donations")
+	donation.GET("/:id", donationHandler.GetDonation)
 
 	err = router.Run()
 	if err != nil {
