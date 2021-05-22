@@ -2,6 +2,7 @@ package donation
 
 type Service interface {
 	GetDonations(userId int) ([]Donation, error)
+	GetDonationById(input DonationIdInput) (Donation, error)
 }
 
 type service struct {
@@ -28,4 +29,13 @@ func (s *service) GetDonations(userId int) ([]Donation, error) {
 	}
 
 	return donations, nil
+}
+
+func (s *service) GetDonationById(input DonationIdInput) (Donation, error) {
+	donation, err := s.repository.FindDonationById(input.Id)
+	if err != nil {
+		return donation, err
+	}
+
+	return donation, nil
 }
