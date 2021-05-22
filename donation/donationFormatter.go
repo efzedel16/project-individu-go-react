@@ -1,6 +1,6 @@
 package donation
 
-type DonationResponseFormatter struct {
+type DonationFormatter struct {
 	Id               int    `json:"id"`
 	UserId           int    `json:"user_id"`
 	Name             string `json:"name"`
@@ -11,8 +11,23 @@ type DonationResponseFormatter struct {
 	Slug             string `json:"slug"`
 }
 
-func DonationFormat(donation Donation) DonationResponseFormatter {
-	donationFormatter := DonationResponseFormatter{}
+type DonationDetailsFormatter struct {
+	Id               int                       `json:"id"`
+	Name             string                    `json:"name"`
+	ShortDescription string                    `json:"short_description"`
+	LongDescription  string                    `json:"long_description"`
+	Perks            []string                  `json:"perks"`
+	GoalAmount       int                       `json:"goal_amount"`
+	CurrentAmount    int                       `json:"current_amount"`
+	Slug             string                    `json:"slug"`
+	Image            string                    `json:"image"`
+	UserId           int                       `json:"user_id"`
+	User             DonationUserFormatter     `json:"user"`
+	Images           []DonationImagesFormatter `json:"images"`
+}
+
+func DonationFormat(donation Donation) DonationFormatter {
+	donationFormatter := DonationFormatter{}
 	donationFormatter.Id = donation.Id
 	donationFormatter.UserId = donation.UserId
 	donationFormatter.Name = donation.Name
@@ -29,8 +44,8 @@ func DonationFormat(donation Donation) DonationResponseFormatter {
 	return donationFormatter
 }
 
-func DonationsFormat(donations []Donation) []DonationResponseFormatter {
-	donationsFormatter := []DonationResponseFormatter{}
+func DonationsFormat(donations []Donation) []DonationFormatter {
+	donationsFormatter := []DonationFormatter{}
 	for _, donation := range donations {
 		donationFormatter := DonationFormat(donation)
 		donationsFormatter = append(donationsFormatter, donationFormatter)
