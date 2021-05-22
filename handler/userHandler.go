@@ -120,7 +120,7 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 
 	currentUser := c.MustGet("currentUser").(user.User)
 	userId := currentUser.Id
-	path := fmt.Sprintf("images/%d-%s", userId, avatarFile.Filename)
+	path := fmt.Sprintf("images/avatars/%d-%s", userId, avatarFile.Filename)
 	err = c.SaveUploadedFile(avatarFile, path)
 	if err != nil {
 		data := gin.H{"is_uploaded": false}
@@ -139,18 +139,38 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 
 	data := gin.H{"is_uploaded": true}
 	response := helper.APIResponse("Successfully uploaded avatar image", http.StatusOK, "success", data)
-	c.JSON(http.StatusBadRequest, response)
+	c.JSON(http.StatusOK, response)
 }
 
-func (h *userHandler) GetUsers(c *gin.Context) {
+func (h *userHandler) GetAllUsers(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Query("id"))
-	users, err := h.userService.GetUsers(id)
+	users, err := h.userService.GetAllUsers(id)
 	if err != nil {
 		response := helper.APIResponse("Failed to get users", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	response := helper.APIResponse("Successfully to get users", http.StatusOK, "success", users)
+	response := helper.APIResponse("Successfully to get users", http.StatusOK, "success", user.UserFormat(users))
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *userHandler) GetUser(c *gin.Context) {
+	var input user.UserIdInput
+	err := c.ShouldBindUri(&input)
+	if err != nil {
+		response := helper.APIResponse("Failed to get user details", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	userDetails, err := h.userService.GetAllUsersById(input)
+	if err != nil {
+		response := helper.APIResponse("Failed to get user details", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Successfully to get user details", http.StatusOK, "success", user.UserFormat(userDetails))
 	c.JSON(http.StatusOK, response)
 }
