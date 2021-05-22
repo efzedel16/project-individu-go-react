@@ -10,15 +10,16 @@ type Service interface {
 	SignInUser(input SignInUserInput) (User, error)
 	IsEmailAvailable(input CheckEmailInput) (bool, error)
 	InsertAvatar(id int, fileLocation string) (User, error)
-	GetUsers(id int) (User, error)
+	GetAllUsers(id int) (User, error)
 	GetUserById(id int) (User, error)
+	GetAllUsersById(input UserIdInput) (User, error)
 }
 
 type service struct {
 	repository Repository
 }
 
-func NewService(repository Repository) *service {
+func NewUserService(repository Repository) *service {
 	return &service{repository}
 }
 
@@ -93,7 +94,7 @@ func (s *service) InsertAvatar(id int, fileLocation string) (User, error) {
 	return updateUser, nil
 }
 
-func (s *service) GetUsers(id int) (User, error) {
+func (s *service) GetAllUsers(id int) (User, error) {
 	if id != 0 {
 		users, err := s.repository.FindUserById(id)
 		if err != nil {
@@ -118,7 +119,16 @@ func (s *service) GetUserById(id int) (User, error) {
 	}
 
 	if user.Id == 0 {
-		return user, errors.New("no user found with this id")
+		return user, errors.New("there aren't users with this id")
+	}
+
+	return user, nil
+}
+
+func (s *service) GetAllUsersById(input UserIdInput) (User, error) {
+	user, err := s.repository.FindUserById(input.Id)
+	if err != nil {
+		return user, err
 	}
 
 	return user, nil
