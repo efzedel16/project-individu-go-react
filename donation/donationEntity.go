@@ -16,13 +16,14 @@ type Donation struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	DonationImages   []DonationImage
+	User             user.User
 }
 
 type DonationImage struct {
 	Id         int
 	DonationId int
-	FileName   string
-	IsPrimary  string
+	Image      string
+	IsPrimary  int
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
