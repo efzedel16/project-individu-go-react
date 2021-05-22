@@ -5,6 +5,7 @@ import "gorm.io/gorm"
 type Repository interface {
 	FindAllDonations() ([]Donation, error)
 	FindDonationsByUserId(userId int) ([]Donation, error)
+	FindDonationById(id int) (Donation, error)
 }
 
 type repository struct {
@@ -33,4 +34,14 @@ func (r *repository) FindDonationsByUserId(userId int) ([]Donation, error) {
 	}
 
 	return donations, nil
+}
+
+func (r *repository) FindDonationById(id int) (Donation, error) {
+	var donation Donation
+	err := r.db.Preload("User").Preload("DonationImages").Where("id = ?", id).Find(&donation).Error
+	if err != nil {
+		return donation, err
+	}
+
+	return donation, nil
 }
