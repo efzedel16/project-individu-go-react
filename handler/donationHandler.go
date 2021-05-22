@@ -12,13 +12,13 @@ type donationHandler struct {
 	donationService donation.Service
 }
 
-func NewDonationHandler(service donation.Service) *donationHandler {
-	return &donationHandler{service}
+func NewDonationHandler(donationService donation.Service) *donationHandler {
+	return &donationHandler{donationService}
 }
 
-func (h *donationHandler) GetDonations(c *gin.Context) {
+func (h *donationHandler) GetAllDonations(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Query("user_id"))
-	donations, err := h.donationService.GetDonations(userId)
+	donations, err := h.donationService.GetAllDonations(userId)
 	if err != nil {
 		response := helper.APIResponse("Failed to get donations", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
@@ -31,14 +31,14 @@ func (h *donationHandler) GetDonations(c *gin.Context) {
 
 func (h *donationHandler) GetDonation(c *gin.Context) {
 	var input donation.DonationIdInput
-	err := c.ShouldBindJSON(&input)
+	err := c.ShouldBindUri(&input)
 	if err != nil {
 		response := helper.APIResponse("Failed to get donation details", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	donationDetails, err := h.donationService.GetDonationById(input)
+	donationDetails, err := h.donationService.GetDonationsById(input)
 	if err != nil {
 		response := helper.APIResponse("Failed to get donation details", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)

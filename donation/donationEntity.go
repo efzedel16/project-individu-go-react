@@ -1,6 +1,9 @@
 package donation
 
-import "time"
+import (
+	"silih_a3/user"
+	"time"
+)
 
 type Donation struct {
 	Id               int
