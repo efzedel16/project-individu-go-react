@@ -31,6 +31,11 @@ type DonationImageFormatter struct {
 	IsPrimary bool   `json:"is_primary"`
 }
 
+type DonationUserFormatter struct {
+	Name   string `json:"name"`
+	Avatar string `json:"avatar"`
+}
+
 func DonationFormat(donation Donation) DonationFormatter {
 	donationFormatter := DonationFormatter{}
 	donationFormatter.Id = donation.Id
