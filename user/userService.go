@@ -10,7 +10,7 @@ type Service interface {
 	SignInUser(input SignInUserInput) (User, error)
 	IsEmailAvailable(input CheckEmailInput) (bool, error)
 	InsertAvatar(id int, fileLocation string) (User, error)
-	GetAllUsers(id int) (User, error)
+	GetAllUsers() ([]UserFormatter, error)
 	GetUserById(id int) (User, error)
 	GetAllUsersById(input UserIdInput) (User, error)
 }
@@ -94,22 +94,19 @@ func (s *service) InsertAvatar(id int, fileLocation string) (User, error) {
 	return updateUser, nil
 }
 
-func (s *service) GetAllUsers(id int) (User, error) {
-	if id != 0 {
-		users, err := s.repository.FindUserById(id)
-		if err != nil {
-			return users, err
-		}
-
-		return users, nil
-	}
-
+func (s *service) GetAllUsers() ([]UserFormatter, error) {
+	var userFormat []UserFormatter
 	users, err := s.repository.FindAllUsers()
-	if err != nil {
-		return users, err
+
+	for _, user := range users {
+		userFormat = append(userFormat, UserFormat(user))
 	}
 
-	return users, nil
+	if err != nil {
+		return userFormat, err
+	}
+
+	return userFormat, nil
 }
 
 func (s *service) GetUserById(id int) (User, error) {
