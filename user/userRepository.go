@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type Repository interface {
 	InsertUser(user User) (User, error)
 	UpdateUser(user User) (User, error)
-	FindAllUsers() (User, error)
+	FindAllUsers() ([]User, error)
 	FindUserById(id int) (User, error)
 	FindUserByEmail(email string) (User, error)
 }
@@ -36,8 +36,8 @@ func (r *repository) UpdateUser(user User) (User, error) {
 	return user, nil
 }
 
-func (r *repository) FindAllUsers() (User, error) {
-	var users User
+func (r *repository) FindAllUsers() ([]User, error) {
+	var users []User
 	err := r.db.Find(&users).Error
 	if err != nil {
 		return users, err
