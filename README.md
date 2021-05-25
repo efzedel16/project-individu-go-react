@@ -68,11 +68,11 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
 buatlah 1 routing khusus yang didapat dari 3rd party API ( bebas apa saja ) dan diolah kemudian tampilkan menggunakan routing GET.
 
 ## release 7
-- lakukan deployment server menggunakan heroku dan juga mengaplikasikan env "environment variable" untuk menginput data connection database mysql sebagai berikut :
-1. MYSQL_DATABASE :	mysql (or your preferred database name)
-2. MYSQL_USER	:	mysql (or your preferred database username)
-3. MYSQL_PASSWORD :	A secure password for MYSQL_USER
-4. MYSQL_HOST	:	tcp or protocol deployment MYSQL
+- lakukan deployment server menggunakan heroku dan juga mengaplikasikan env "environment variable" untuk menginput data connection database mysql sebagai berikut : ✔️
+1. MYSQL_DATABASE :	mysql (or your preferred database name) ✔️
+2. MYSQL_USER	:	mysql (or your preferred database username) ✔️
+3. MYSQL_PASSWORD :	A secure password for MYSQL_USER ✔️
+4. MYSQL_HOST	:	tcp or protocol deployment MYSQL ✔️
 
 - kemudian buatlah API documentation dengan menggunakan swagger (boleh membuat dokumentasi manual menggunakan API-DOC.md)
 
