@@ -28,8 +28,8 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
 - REST API yang dibuat harus memenuhi basic CRUD ( create, read, update, delete)
 - Didalam rest API tersebut harus memiliki :
    * POST "/users" ket : routingan untuk membuat user baru ✔️
-   * GET "/users" , ket : menampilkan seluruh user yang ada di database
-   * GET "/users/:user_id" , ket : menampilkan 1 user sesuai dengan parameter yang diberikan
+   * GET "/users" , ket : menampilkan seluruh user yang ada di database ✔️
+   * GET "/users/:user_id" , ket : menampilkan 1 user sesuai dengan parameter yang diberikan ✔️
    * PUT "/users/:user_id", ket : melakukan update user sesuai dengan parameter yang diberikan
    * DELETE "/users/:user_id" ket : routingan untuk melakukan delete user sesuai parameter yang diberikan"
 
@@ -44,7 +44,7 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
 
 ## release 4
 - Gunakan hashing untuk data yang bersifat pribadi dengan membuat package helper. Seperti password user atau data lain di tabel yang datanya perlu di enksipsi. ✔️
-- Aplikasikan "env" atau environment variabel pada project ini.
+- Aplikasikan "env" atau environment variabel pada project ini. ✔️
 
 
 # Project Day 3
@@ -57,7 +57,7 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
   * POST "/users/login" , ket : routingan login digunakan untuk mendapatkan akses authorization dan juga mendapatkan data user yang sedang melakukan login ✔️
 
 2. Silahkan menerapkan middleware untuk routingan :
-  * GET "users/:user_id"
+  * GET "users/:user_id" ✔️
   * PUT "users/:user_id"
   * DELETE "/users/:user_id"
 
