@@ -1,15 +1,16 @@
-package auth
+package middleware
 
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"silih_a3/auth"
 	"silih_a3/helper"
 	"silih_a3/user"
 	"strings"
 )
 
-func AuthMiddleware(authService Service, userService user.Service) gin.HandlerFunc {
+func AuthMiddleware(authService auth.Service, userService user.Service) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if !strings.Contains(authHeader, "Bearer") {
