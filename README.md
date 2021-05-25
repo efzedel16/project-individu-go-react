@@ -6,9 +6,9 @@ Kita akan membuat tugas project pribadi dengan membuat back end menggunakan GO d
 
 - Silahkan tentukan mau membuat project seperti apa, untuk tema bebas. Tetapi khusus untuk back end harus memenuhi kriteria dibawah ini.
 
-# Project - Day 1
+# Project - Day 1 ✔️
 ## Release 1 ✔️
-Buatlah sebuah tabel diagram sesuai keinginan kalian dengan catatan :
+Buatlah sebuah tabel diagram sesuai keinginan kalian dengan catatan : ✔️
 1. terdapat minimal 3 tabel di dalam database. ✔️
 2. memiliki tabel user, dengan kolom sebagai berikut : ✔️
   * id / user_id : primarykey, not null, auto increment ✔️
@@ -33,7 +33,7 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
    * PUT "/users/:user_id", ket : melakukan update user sesuai dengan parameter yang diberikan
    * DELETE "/users/:user_id" ket : routingan untuk melakukan delete user sesuai parameter yang diberikan"
 
-# Project - Day 2
+# Project - Day 2 ✔️
 ## Release 3 ✔️
 
 - Silahkan perbaiki code REST API yang sudah di buat dengan menerapkan arsitektur yang sudah dijelaskan dengan menerapkan layer - layer : ✔️
@@ -49,10 +49,10 @@ Buatlah rest API yang dibutuhkan untuk menggunakan GIN - GONIC dan GORM.
 
 # Project Day 3
 ## release 5
-### Saatnya menerapkan authorization menggunakan JWT "json web token" dan juga middleware di project ini. 
+### Saatnya menerapkan authorization menggunakan JWT "json web token" dan juga middleware di project ini. ✔️
 
-- Terdapat beberapa code yang wajib dibuat di project ini sebagai berikut: 
-1. buatlah routing untuk register user dan juga login user
+- Terdapat beberapa code yang wajib dibuat di project ini sebagai berikut:  ✔️
+1. buatlah routing untuk register user dan juga login user ✔️
   * POST "/users/register" , ket : routingan register digunakan untuk melakukan register user ✔️
   * POST "/users/login" , ket : routingan login digunakan untuk mendapatkan akses authorization dan juga mendapatkan data user yang sedang melakukan login ✔️
 
