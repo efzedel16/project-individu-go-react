@@ -1,18 +1,17 @@
-package handler
+package donation
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"silih_a3/donation"
 	"silih_a3/helper"
 	"strconv"
 )
 
 type donationHandler struct {
-	donationService donation.Service
+	donationService Service
 }
 
-func NewDonationHandler(donationService donation.Service) *donationHandler {
+func NewDonationHandler(donationService Service) *donationHandler {
 	return &donationHandler{donationService}
 }
 
@@ -25,12 +24,12 @@ func (h *donationHandler) GetAllDonations(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Successfully to get donations", http.StatusOK, "success", donation.DonationsFormat(donations))
+	response := helper.APIResponse("Successfully to get donations", http.StatusOK, "success", DonationsFormat(donations))
 	c.JSON(http.StatusOK, response)
 }
 
 func (h *donationHandler) GetDonation(c *gin.Context) {
-	var input donation.DonationIdInput
+	var input DonationIdInput
 	err := c.ShouldBindUri(&input)
 	if err != nil {
 		response := helper.APIResponse("Failed to get donation details", http.StatusBadRequest, "error", nil)
@@ -45,6 +44,6 @@ func (h *donationHandler) GetDonation(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Successfully to get donation details", http.StatusOK, "success", donation.DonationDetailsFormat(donationDetails))
+	response := helper.APIResponse("Successfully to get donation details", http.StatusOK, "success", DonationDetailsFormat(donationDetails))
 	c.JSON(http.StatusOK, response)
 }

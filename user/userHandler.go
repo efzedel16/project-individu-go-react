@@ -1,4 +1,4 @@
-package handler
+package user
 
 import (
 	"fmt"
@@ -6,21 +6,20 @@ import (
 	"net/http"
 	"silih_a3/auth"
 	"silih_a3/helper"
-	"silih_a3/user"
 	"strconv"
 )
 
 type userHandler struct {
-	userService user.Service
+	userService Service
 	authService auth.Service
 }
 
-func NewUserHandler(userService user.Service, authService auth.Service) *userHandler {
+func NewUserHandler(userService Service, authService auth.Service) *userHandler {
 	return &userHandler{userService, authService}
 }
 
 func (h *userHandler) SignUpUser(c *gin.Context) {
-	var input user.SignUpUserInput
+	var input SignUpUserInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.SignUpValidationErrorFormat(err)
@@ -44,13 +43,13 @@ func (h *userHandler) SignUpUser(c *gin.Context) {
 		return
 	}
 
-	formatter := user.Format(signUpUser, token)
+	formatter := Format(signUpUser, token)
 	response := helper.APIResponse("Account successfully registered", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
 
 func (h *userHandler) SignInUser(c *gin.Context) {
-	var input user.SignInUserInput
+	var input SignInUserInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.SignUpValidationErrorFormat(err)
@@ -75,13 +74,13 @@ func (h *userHandler) SignInUser(c *gin.Context) {
 		return
 	}
 
-	formatter := user.Format(signInUser, token)
+	formatter := Format(signInUser, token)
 	response := helper.APIResponse("Account login successfully ", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
 
 func (h *userHandler) CheckEmailAvailability(c *gin.Context) {
-	var input user.CheckEmailInput
+	var input CheckEmailInput
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.SignUpValidationErrorFormat(err)
@@ -118,7 +117,7 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 		return
 	}
 
-	currentUser := c.MustGet("currentUser").(user.User)
+	currentUser := c.MustGet("currentUser").(User)
 	userId := currentUser.Id
 	path := fmt.Sprintf("images/avatars/%d-%s", userId, avatarFile.Filename)
 	err = c.SaveUploadedFile(avatarFile, path)
@@ -151,12 +150,12 @@ func (h *userHandler) GetAllUsers(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Successfully to get users", http.StatusOK, "success", user.UserFormat(users))
+	response := helper.APIResponse("Successfully to get users", http.StatusOK, "success", UserFormat(users))
 	c.JSON(http.StatusOK, response)
 }
 
 func (h *userHandler) GetUser(c *gin.Context) {
-	var input user.UserIdInput
+	var input UserIdInput
 	err := c.ShouldBindUri(&input)
 	if err != nil {
 		response := helper.APIResponse("Failed to get user details", http.StatusBadRequest, "error", nil)
@@ -171,6 +170,6 @@ func (h *userHandler) GetUser(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Successfully to get user details", http.StatusOK, "success", user.UserFormat(userDetails))
+	response := helper.APIResponse("Successfully to get user details", http.StatusOK, "success", UserFormat(userDetails))
 	c.JSON(http.StatusOK, response)
 }
