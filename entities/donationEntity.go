@@ -1,7 +1,6 @@
-package donation
+package entities
 
 import (
-	"silih_a3/user"
 	"time"
 )
 
@@ -19,7 +18,7 @@ type Donation struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	DonationImages   []DonationImage
-	User             user.User
+	User             User
 }
 
 type DonationImage struct {

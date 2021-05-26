@@ -1,6 +1,9 @@
-package donation
+package formatters
 
-import "strings"
+import (
+	"silih_a3/entities"
+	"strings"
+)
 
 type DonationFormatter struct {
 	Id               int    `json:"id"`
@@ -39,7 +42,7 @@ type DonationUserFormatter struct {
 	Avatar    string `json:"avatar"`
 }
 
-func DonationsFormat(donations []Donation) []DonationFormatter {
+func DonationsFormat(donations []entities.Donation) []DonationFormatter {
 	donationsFormatter := []DonationFormatter{}
 	for _, donation := range donations {
 		donationFormatter := DonationFormat(donation)
@@ -49,7 +52,7 @@ func DonationsFormat(donations []Donation) []DonationFormatter {
 	return donationsFormatter
 }
 
-func DonationFormat(donation Donation) DonationFormatter {
+func DonationFormat(donation entities.Donation) DonationFormatter {
 	donationFormatter := DonationFormatter{}
 	donationFormatter.Id = donation.Id
 	donationFormatter.UserId = donation.UserId
@@ -66,7 +69,7 @@ func DonationFormat(donation Donation) DonationFormatter {
 	return donationFormatter
 }
 
-func DonationDetailsFormat(donation Donation) DonationDetailsFormatter {
+func DonationDetailsFormat(donation entities.Donation) DonationDetailsFormatter {
 	var perks []string
 	for _, perk := range strings.Split(donation.Perks, ",") {
 		perks = append(perks, strings.TrimSpace(perk))

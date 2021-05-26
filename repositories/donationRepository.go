@@ -1,11 +1,14 @@
-package donation
+package repositories
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+	"silih_a3/entities"
+)
 
 type Repository interface {
-	FindAllDonations() ([]Donation, error)
-	FindDonationsByUserId(userId int) ([]Donation, error)
-	FindDonationById(id int) (Donation, error)
+	FindAllDonations() ([]entities.Donation, error)
+	FindDonationsByUserId(userId int) ([]entities.Donation, error)
+	FindDonationById(id int) (entities.Donation, error)
 }
 
 type repository struct {
@@ -16,8 +19,8 @@ func NewDonationRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
-func (r *repository) FindAllDonations() ([]Donation, error) {
-	var donations []Donation
+func (r *repository) FindAllDonations() ([]entities.Donation, error) {
+	var donations []entities.Donation
 	err := r.db.Preload("DonationImages", "donation_images.is_primary = 1").Find(&donations).Error
 	if err != nil {
 		return donations, err
@@ -26,8 +29,8 @@ func (r *repository) FindAllDonations() ([]Donation, error) {
 	return donations, nil
 }
 
-func (r *repository) FindDonationsByUserId(userId int) ([]Donation, error) {
-	var donations []Donation
+func (r *repository) FindDonationsByUserId(userId int) ([]entities.Donation, error) {
+	var donations []entities.Donation
 	err := r.db.Where("user_id = ?", userId).Preload("DonationImages", "donation_images.is_primary = 1").Find(&donations).Error
 	if err != nil {
 		return donations, err
@@ -36,8 +39,8 @@ func (r *repository) FindDonationsByUserId(userId int) ([]Donation, error) {
 	return donations, nil
 }
 
-func (r *repository) FindDonationById(id int) (Donation, error) {
-	var donation Donation
+func (r *repository) FindDonationById(id int) (entities.Donation, error) {
+	var donation entities.Donation
 	err := r.db.Preload("User").Preload("DonationImages").Where("id = ?", id).Find(&donation).Error
 	if err != nil {
 		return donation, err
