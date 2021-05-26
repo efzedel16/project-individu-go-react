@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"silih_a3/auth"
 	"silih_a3/helper"
-	"silih_a3/user"
+	"silih_a3/services"
 	"strings"
 )
 
-func AuthMiddleware(authService auth.Service, userService user.Service) gin.HandlerFunc {
+func AuthMiddleware(authService auth.AuthService, userService services.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if !strings.Contains(authHeader, "Bearer") {
