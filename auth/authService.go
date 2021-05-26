@@ -5,7 +5,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-type Service interface {
+type AuthService interface {
 	GenerateToken(userId int) (string, error)
 	TokenValidation(encodedToken string) (*jwt.Token, error)
 }
@@ -13,9 +13,9 @@ type Service interface {
 type jwtService struct {
 }
 
-var SECRET_KEY = "silih_a3"
+var SecretKey = "silih_a3"
 
-func NewService() *jwtService {
+func NewAuthService() *jwtService {
 	return &jwtService{}
 }
 
@@ -24,7 +24,7 @@ func (s *jwtService) GenerateToken(userId int) (string, error) {
 		"user_id": userId,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
-	signedToken, err := token.SignedString(SECRET_KEY)
+	signedToken, err := token.SignedString(SecretKey)
 	if err != nil {
 		return signedToken, err
 	}
@@ -39,7 +39,7 @@ func (s *jwtService) TokenValidation(encodedToken string) (*jwt.Token, error) {
 			return nil, errors.New("invalid token")
 		}
 
-		return SECRET_KEY, nil
+		return SecretKey, nil
 	})
 
 	if err != nil {
