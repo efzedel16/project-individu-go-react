@@ -7,7 +7,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.Static("/images", "./images")
+	// r.Static("/images", "./images")
 
 	routes.UserRoute(r)
 	// routes.DonationRoute(r)
