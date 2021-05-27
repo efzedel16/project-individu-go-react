@@ -6,42 +6,42 @@ import (
 	"silih_a3/repositories"
 )
 
-type Service interface {
+type DonationService interface {
 	GetAllDonations(userId int) ([]entities.Donation, error)
-	GetDonationsById(input inputs.DonationIdInput) (entities.Donation, error)
+	GetDonationsById(idInput inputs.DonationIdInput) (entities.Donation, error)
 }
 
-type service struct {
-	repository repositories.Repository
+type donationService struct {
+	donationRepository repositories.DonationRepository
 }
 
-func NewDonationService(repository repositories.Repository) *service {
-	return &service{repository}
+func NewDonationService(donationRepository repositories.DonationRepository) *donationService {
+	return &donationService{donationRepository}
 }
 
-func (s *service) GetAllDonations(userId int) ([]entities.Donation, error) {
+func (s *donationService) GetAllDonations(userId int) ([]entities.Donation, error) {
 	if userId != 0 {
-		donations, err := s.repository.FindDonationsByUserId(userId)
+		donationsData, err := s.donationRepository.FindDonationsByUserId(userId)
 		if err != nil {
-			return donations, err
+			return donationsData, err
 		}
 
-		return donations, nil
+		return donationsData, nil
 	}
 
-	donations, err := s.repository.FindAllDonations()
+	donationsData, err := s.donationRepository.FindAllDonations()
 	if err != nil {
-		return donations, err
+		return donationsData, err
 	}
 
-	return donations, nil
+	return donationsData, nil
 }
 
-func (s *service) GetDonationsById(input inputs.DonationIdInput) (entities.Donation, error) {
-	donation, err := s.repository.FindDonationById(input.Id)
+func (s *donationService) GetDonationsById(input inputs.DonationIdInput) (entities.Donation, error) {
+	donationData, err := s.donationRepository.FindDonationById(input.Id)
 	if err != nil {
-		return donation, err
+		return donationData, err
 	}
 
-	return donation, nil
+	return donationData, nil
 }
