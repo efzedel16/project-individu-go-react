@@ -24,7 +24,7 @@ func UserRoute(r *gin.Engine) {
 	user := r.Group("/users")
 	user.GET("/:id", middleware.AuthMiddleware(authService, userService), userHandler.ShowUser)
 	user.POST("/signup", userHandler.SignUpUser)
-	user.POST("/signin", middleware.AuthMiddleware(authService, userService), userHandler.SignInUser)
+	user.POST("/signin", userHandler.SignInUser)
 	user.POST("/email_checker", userHandler.CheckEmailAvailability)
 	user.POST("/avatar", middleware.AuthMiddleware(authService, userService), userHandler.UploadAvatar)
 
