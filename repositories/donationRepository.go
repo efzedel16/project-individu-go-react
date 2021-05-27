@@ -5,46 +5,46 @@ import (
 	"silih_a3/entities"
 )
 
-type Repository interface {
+type DonationRepository interface {
 	FindAllDonations() ([]entities.Donation, error)
 	FindDonationsByUserId(userId int) ([]entities.Donation, error)
-	FindDonationById(id int) (entities.Donation, error)
+	FindDonationById(donationId int) (entities.Donation, error)
 }
 
-type repository struct {
-	db *gorm.DB
+type donationRepository struct {
+	donationDb *gorm.DB
 }
 
-func NewDonationRepository(db *gorm.DB) *repository {
-	return &repository{db}
+func NewDonationRepository(donationDb *gorm.DB) *donationRepository {
+	return &donationRepository{donationDb}
 }
 
-func (r *repository) FindAllDonations() ([]entities.Donation, error) {
-	var donations []entities.Donation
-	err := r.db.Preload("DonationImages", "donation_images.is_primary = 1").Find(&donations).Error
+func (r *donationRepository) FindAllDonations() ([]entities.Donation, error) {
+	var donationsData []entities.Donation
+	err := r.donationDb.Preload("DonationImages", "donation_images.is_primary = 1").Find(&donationsData).Error
 	if err != nil {
-		return donations, err
+		return donationsData, err
 	}
 
-	return donations, nil
+	return donationsData, nil
 }
 
-func (r *repository) FindDonationsByUserId(userId int) ([]entities.Donation, error) {
-	var donations []entities.Donation
-	err := r.db.Where("user_id = ?", userId).Preload("DonationImages", "donation_images.is_primary = 1").Find(&donations).Error
+func (r *donationRepository) FindDonationsByUserId(userId int) ([]entities.Donation, error) {
+	var donationsData []entities.Donation
+	err := r.donationDb.Where("user_id = ?", userId).Preload("DonationImages", "donation_images.is_primary = 1").Find(&donationsData).Error
 	if err != nil {
-		return donations, err
+		return donationsData, err
 	}
 
-	return donations, nil
+	return donationsData, nil
 }
 
-func (r *repository) FindDonationById(id int) (entities.Donation, error) {
-	var donation entities.Donation
-	err := r.db.Preload("User").Preload("DonationImages").Where("id = ?", id).Find(&donation).Error
+func (r *donationRepository) FindDonationById(donationId int) (entities.Donation, error) {
+	var donationsData entities.Donation
+	err := r.donationDb.Preload("User").Preload("DonationImages").Where("donation_id = ?", donationId).Find(&donationsData).Error
 	if err != nil {
-		return donation, err
+		return donationsData, err
 	}
 
-	return donation, nil
+	return donationsData, nil
 }
