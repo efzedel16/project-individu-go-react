@@ -22,32 +22,32 @@ func NewUserHandler(userService services.UserService, authService auth.AuthServi
 }
 
 func (h *userHandler) SignUpUser(c *gin.Context) {
-	var inputData inputs.SignUpUserInput
-	err := c.ShouldBindJSON(&inputData)
+	var input inputs.SignUpUserInput
+	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.ErrorValidationRequiredFormat(err)
 		errorMessage := gin.H{"errors": errors}
-		response := helper.APIResponse("Account failed registered", http.StatusUnprocessableEntity, "error", errorMessage)
+		response := helper.APIResponse("Failed to register account", http.StatusUnprocessableEntity, "error", errorMessage)
 		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
-	signUpUser, err := h.userService.SignUpUser(inputData)
+	signUpUser, err := h.userService.SignUpUser(input)
 	if err != nil {
-		response := helper.APIResponse("Account failed registered", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to register account", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	userTokenData, err := h.authService.GenerateToken(signUpUser.Id)
+	token, err := h.authService.GenerateToken(signUpUser.Id)
 	if err != nil {
-		response := helper.APIResponse("Account failed registered", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Failed to register account", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
-	signUpFormatter := formatters.Format(signUpUser, userTokenData)
-	response := helper.APIResponse("Account successfully registered", http.StatusOK, "success", signUpFormatter)
+	userFormatter := formatters.Format(signUpUser, token)
+	response := helper.APIResponse("Successfully registered account", http.StatusOK, "success", userFormatter)
 	c.JSON(http.StatusOK, response)
 }
 
@@ -173,6 +173,6 @@ func (h *userHandler) ShowUser(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Successfully to get user details", http.StatusOK, "success", formatters.UserFormat(userDetails))
+	response := helper.APIResponse("Successfully to get user details", http.StatusOK, "success", formatters.UserDataFormat(userDetails))
 	c.JSON(http.StatusOK, response)
 }
