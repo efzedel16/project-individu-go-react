@@ -4,10 +4,10 @@ import (
 	"time"
 )
 
-type DonationEntity struct {
+type Donation struct {
 	DonationId       int
 	UserId           int
-	Name             string
+	DonationName     string
 	ShortDescription string
 	LongDescription  string
 	Perks            string
@@ -17,11 +17,11 @@ type DonationEntity struct {
 	Slug             string
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
-	DonationImages   []DonationImageEntity
-	User             User
+	DonationImages   []DonationImage
+	UserData         User
 }
 
-type DonationImageEntity struct {
+type DonationImage struct {
 	DonationImageId int
 	DonationId      int
 	ImagePath       string
