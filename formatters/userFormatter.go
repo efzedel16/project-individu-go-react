@@ -3,42 +3,40 @@ package formatters
 import "silih_a3/entities"
 
 type UserDataFormatter struct {
+	UserId     int    `json:"user_id"`
+	FirstName  string `json:"first_name"`
+	LastName   string `json:"last_name"`
+	Email      string `json:"email"`
+	AvatarPath string `json:"avatar_path"`
+}
+
+type SignInFormatter struct {
 	UserId    int    `json:"user_id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
-	Avatar    string `json:"avatar"`
+	UserToken string `json:"token"`
 }
 
-type Formatter struct {
-	UserId    int    `json:"user_id"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Email     string `json:"email"`
-	Avatar    string `json:"avatar"`
-	Token     string `json:"token"`
-}
-
-func UserFormat(user entities.User) UserDataFormatter {
+func UserDataFormat(userData entities.User) UserDataFormatter {
 	userFormatter := UserDataFormatter{
-		UserId:    user.Id,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Email:     user.Email,
-		Avatar:    user.Avatar,
+		UserId:     userData.Id,
+		FirstName:  userData.FirstName,
+		LastName:   userData.LastName,
+		Email:      userData.Email,
+		AvatarPath: userData.AvatarPath,
 	}
 
 	return userFormatter
 }
 
-func Format(user entities.User, token string) Formatter {
-	userFormatter := Formatter{
-		UserId:    user.Id,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Email:     user.Email,
-		Avatar:    user.Avatar,
-		Token:     token,
+func Format(userData entities.User, userToken string) SignInFormatter {
+	userFormatter := SignInFormatter{
+		UserId:    userData.Id,
+		FirstName: userData.FirstName,
+		LastName:  userData.LastName,
+		Email:     userData.Email,
+		UserToken: userToken,
 	}
 
 	return userFormatter
