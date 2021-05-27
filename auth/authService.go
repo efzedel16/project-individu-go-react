@@ -5,6 +5,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+var SecretKey = []byte("silih_a3")
+
 type AuthService interface {
 	GenerateToken(userId int) (string, error)
 	TokenValidation(encodedToken string) (*jwt.Token, error)
@@ -12,8 +14,6 @@ type AuthService interface {
 
 type jwtService struct {
 }
-
-var SecretKey = []byte("silih_a3")
 
 func NewAuthService() *jwtService {
 	return &jwtService{}
