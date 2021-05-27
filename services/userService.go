@@ -17,6 +17,7 @@ type UserService interface {
 	GetAllUsers() ([]formatters.UserDataFormatter, error)
 	GetUserById(userId int) (entities.User, error)
 	GetAllUsersById(idInput inputs.UserIdInput) (entities.User, error)
+	// UpdateUserById(userId int, updateData inputs.UpdateUserInput)
 }
 
 type userService struct {
@@ -28,18 +29,18 @@ func NewUserService(userRepository repositories.UserRepository) *userService {
 }
 
 func (s *userService) SignUpUser(signUpInput inputs.SignUpUserInput) (entities.User, error) {
-	userData := entities.User{}
-	userData.FirstName = signUpInput.FirstName
-	userData.LastName = signUpInput.LastName
-	userData.Email = signUpInput.Email
-	passwordHashData, err := bcrypt.GenerateFromPassword([]byte(signUpInput.Password), bcrypt.MinCost)
+	user := entities.User{}
+	user.FirstName = signUpInput.FirstName
+	user.LastName = signUpInput.LastName
+	user.Email = signUpInput.Email
+	passwordHash, err := bcrypt.GenerateFromPassword([]byte(signUpInput.Password), bcrypt.MinCost)
+	user.PasswordHash = string(passwordHash)
+	user.Role = "user"
 	if err != nil {
-		return userData, err
+		return user, err
 	}
-	userData.Password = string(passwordHashData)
-	userData.Role = "user"
 
-	newUser, err := s.userRepository.InsertUser(userData)
+	newUser, err := s.userRepository.InsertUser(user)
 	if err != nil {
 		return newUser, err
 	}
@@ -59,7 +60,7 @@ func (s *userService) SignInUser(signInInput inputs.SignInUserInput) (entities.U
 		return userData, errors.New("no user found with this email")
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(userData.Password), []byte(userPassword))
+	err = bcrypt.CompareHashAndPassword([]byte(userData.PasswordHash), []byte(userPassword))
 	if err != nil {
 		return userData, err
 	}
@@ -87,7 +88,7 @@ func (s *userService) SaveAvatar(userId int, avatarPath string) (entities.User, 
 		return userData, err
 	}
 
-	userData.Avatar = avatarPath
+	userData.AvatarPath = avatarPath
 	updateUser, err := s.userRepository.UpdateUser(userData)
 	if err != nil {
 		return updateUser, err
@@ -100,7 +101,7 @@ func (s *userService) GetAllUsers() ([]formatters.UserDataFormatter, error) {
 	var userDataFormat []formatters.UserDataFormatter
 	users, err := s.userRepository.FindAllUsers()
 	for _, user := range users {
-		userDataFormat = append(userDataFormat, formatters.UserFormat(user))
+		userDataFormat = append(userDataFormat, formatters.UserDataFormat(user))
 	}
 
 	if err != nil {
