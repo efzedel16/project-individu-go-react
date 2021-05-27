@@ -10,7 +10,7 @@ func main() {
 	r.Static("/images", "./images")
 
 	routes.UserRoute(r)
-	routes.DonationRoute(r)
+	// routes.DonationRoute(r)
 
 	err := r.Run()
 	if err != nil {
