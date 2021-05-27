@@ -6,18 +6,18 @@ import (
 )
 
 type DonationFormatter struct {
-	Id               int    `json:"id"`
+	DonationId       int    `json:"donation_id"`
 	UserId           int    `json:"user_id"`
 	Name             string `json:"name"`
 	ShortDescription string `json:"short_description"`
-	Image            string `json:"image"`
+	ImagePath        string `json:"image_path"`
 	GoalAmount       int    `json:"goal_amount"`
 	CurrentAmount    int    `json:"current_amount"`
 	Slug             string `json:"slug"`
 }
 
 type DonationDetailsFormatter struct {
-	Id               int                       `json:"id"`
+	DonationId       int                       `json:"donation_id"`
 	Name             string                    `json:"name"`
 	ShortDescription string                    `json:"short_description"`
 	LongDescription  string                    `json:"long_description"`
@@ -27,26 +27,25 @@ type DonationDetailsFormatter struct {
 	Slug             string                    `json:"slug"`
 	UserId           int                       `json:"user_id"`
 	User             DonationUserFormatter     `json:"user"`
-	Image            string                    `json:"image"`
+	ImagePath        string                    `json:"image_path"`
 	Images           []DonationImagesFormatter `json:"images"`
 }
 
 type DonationImagesFormatter struct {
-	Image     string `json:"image"`
+	ImagePath string `json:"image_path"`
 	IsPrimary bool   `json:"is_primary"`
 }
 
 type DonationUserFormatter struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Avatar    string `json:"avatar"`
+	FirstName  string `json:"first_name"`
+	LastName   string `json:"last_name"`
+	AvatarPath string `json:"avatar_path"`
 }
 
 func DonationsFormat(donations []entities.Donation) []DonationFormatter {
 	donationsFormatter := []DonationFormatter{}
 	for _, donation := range donations {
-		donationFormatter := DonationFormat(donation)
-		donationsFormatter = append(donationsFormatter, donationFormatter)
+		donationsFormatter = append(donationsFormatter, DonationFormat(donation))
 	}
 
 	return donationsFormatter
@@ -54,16 +53,16 @@ func DonationsFormat(donations []entities.Donation) []DonationFormatter {
 
 func DonationFormat(donation entities.Donation) DonationFormatter {
 	donationFormatter := DonationFormatter{}
-	donationFormatter.Id = donation.Id
+	donationFormatter.DonationId = donation.DonationId
 	donationFormatter.UserId = donation.UserId
-	donationFormatter.Name = donation.Name
+	donationFormatter.Name = donation.DonationName
 	donationFormatter.ShortDescription = donation.ShortDescription
-	donationFormatter.Image = ""
+	donationFormatter.ImagePath = ""
 	donationFormatter.GoalAmount = donation.GoalAmount
 	donationFormatter.CurrentAmount = donation.CurrentAmount
 	donationFormatter.Slug = donation.Slug
 	if len(donation.DonationImages) > 0 {
-		donationFormatter.Image = donation.DonationImages[0].Image
+		donationFormatter.ImagePath = donation.DonationImages[0].ImagePath
 	}
 
 	return donationFormatter
@@ -76,31 +75,31 @@ func DonationDetailsFormat(donation entities.Donation) DonationDetailsFormatter 
 	}
 
 	donationDetailsFormatter := DonationDetailsFormatter{}
-	donationDetailsFormatter.Id = donation.Id
-	donationDetailsFormatter.Name = donation.Name
+	donationDetailsFormatter.DonationId = donation.DonationId
+	donationDetailsFormatter.Name = donation.DonationName
 	donationDetailsFormatter.ShortDescription = donation.ShortDescription
 	donationDetailsFormatter.LongDescription = donation.LongDescription
 	donationDetailsFormatter.Perks = perks
 	donationDetailsFormatter.GoalAmount = donation.GoalAmount
 	donationDetailsFormatter.CurrentAmount = donation.CurrentAmount
 	donationDetailsFormatter.Slug = donation.Slug
-	donationDetailsFormatter.Image = ""
+	donationDetailsFormatter.ImagePath = ""
 	donationDetailsFormatter.UserId = donation.UserId
 	if len(donation.DonationImages) > 0 {
-		donationDetailsFormatter.Image = donation.DonationImages[0].Image
+		donationDetailsFormatter.ImagePath = donation.DonationImages[0].ImagePath
 	}
 
-	user := donation.User
+	user := donation.UserData
 	donationUserFormatter := DonationUserFormatter{}
 	donationUserFormatter.FirstName = user.FirstName
 	donationUserFormatter.LastName = user.LastName
-	donationUserFormatter.Avatar = user.Avatar
+	donationUserFormatter.AvatarPath = user.AvatarPath
 	donationDetailsFormatter.User = donationUserFormatter
 
 	images := []DonationImagesFormatter{}
 	for _, image := range donation.DonationImages {
 		donationImagesFormatter := DonationImagesFormatter{}
-		donationImagesFormatter.Image = image.Image
+		donationImagesFormatter.ImagePath = image.ImagePath
 		isPrimary := false
 		if image.IsPrimary == 1 {
 			isPrimary = true
